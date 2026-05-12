@@ -1,20 +1,41 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# WARPWARDEN
 
-# Run and deploy your AI Studio app
+![Warpwarden Logo](https://warden-portal.vercel.app/logo.png)
 
-This contains everything you need to run your app locally.
+**WARPWARDEN** is a strategic tower defense / guardian game built with Next.js concepts (powered by Vite/Express), TypeScript, Tailwind CSS, Canvas, and Framer Motion. As the last protector of reality, you use powerful warp technology to defend floating realms from dimensional invaders by placing Warp Towers, creating portals, and manipulating space-time.
 
-View your app in AI Studio: https://ai.studio/apps/d9ad1ea5-4aa5-4f9d-b177-eaf0b387fc91
+## Features
 
-## Run Locally
+- **Strategic Tower Defense**: Classic TD mechanics enhanced with modern space-time warping.
+- **Wave System**: Survive endless waves with escalating difficulties.
+- **On-chain Integration**:
+  - ERC-8021 Transaction Attribution
+  - ERC-8004 Trustless Agents support
+  - "Say GM" via Base Network
+- **Mobile First**: Fully responsive and optimized for portrait mode gameplay.
 
-**Prerequisites:**  Node.js
+## Technology Stack
 
+- React 19 + TypeScript
+- Base Mainnet (Viem + Wagmi)
+- Zustand (State Management)
+- Tailwind CSS
+- Express.js + Vite (Full-stack architecture)
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## AI Agents & orchestration
+
+This platform is integrated with the **Warden Portal Orchestrator** - an ERC-8004 compliant AI agent capable of portal management, operations, and multi-task automation.
+
+### Architecture
+
+The Agent Card definition is available at:
+`/.well-known/agent-card.json`
+
+The following Agent endpoints are exposed:
+- `GET /api/agent` - Main agent control API
+- `GET /api/mcp` - Model Context Protocol availability
+- `POST /api/mcp` - Active command execution
+
+---
+
+*Defend Reality on Base. The dimensional invaders are coming.*

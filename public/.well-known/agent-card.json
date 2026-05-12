@@ -1,0 +1,41 @@
+{
+  "name": "Warden Portal Orchestrator",
+  "description": "Warden Portal platformunda çalışan ERC-8004 uyumlu AI Agent. Portal management, warden operations, security mechanics ve multi-task automation yapan akıllı orchestrator.",
+  "version": "1.0.0",
+  "type": "https://eips.ethereum.org/EIPS/eip-8004#registration-v1",
+  "image": "https://warden-portal.vercel.app/logo.png",
+  "wallets": {
+    "base": "0x29536D0bc1004ab274c4F0F59734Ad74D4559b7B"
+  },
+  "services": [
+    {
+      "name": "A2A",
+      "endpoint": "https://warden-portal.vercel.app/.well-known/agent-card.json",
+      "version": "1.0.0",
+      "description": "Agent-to-Agent communication"
+    },
+    {
+      "name": "MCP",
+      "endpoint": "https://warden-portal.vercel.app/api/mcp",
+      "version": "1.0.0",
+      "description": "Model Context Protocol - Active command execution"
+    },
+    {
+      "name": "API",
+      "endpoint": "https://warden-portal.vercel.app/api/agent",
+      "version": "1.0.0",
+      "description": "Main agent control API"
+    }
+  ],
+  "capabilities": [
+    "portal-management",
+    "warden-operations",
+    "security-mechanics",
+    "multi-task-automation",
+    "access-control",
+    "mcp-command-execution"
+  ],
+  "supportedChains": ["eip155:8453"],
+  "active": true,
+  "status": "online"
+}
