@@ -1,41 +1,62 @@
-# WARPWARDEN
+# WARPWARDEN: Warden Portal Orchestrator
 
 ![Warpwarden Logo](https://warden-portal.vercel.app/logo.png)
 
-**WARPWARDEN** is a strategic tower defense / guardian game built with Next.js concepts (powered by Vite/Express), TypeScript, Tailwind CSS, Canvas, and Framer Motion. As the last protector of reality, you use powerful warp technology to defend floating realms from dimensional invaders by placing Warp Towers, creating portals, and manipulating space-time.
+**Warden Portal Orchestrator / WARPWARDEN** is an integrated strategic tower defense / guardian game and an ERC-8004 compliant AI Agent orchestrator. Running on the Warden Portal platform, it is designed for portal management, warden operations, security mechanics, and multi-task automation.
 
-## Features
+As the last protector of reality, use powerful warp technology to defend floating realms from dimensional invaders by placing Warp Towers, creating portals, and manipulating space-time.
 
-- **Strategic Tower Defense**: Classic TD mechanics enhanced with modern space-time warping.
-- **Wave System**: Survive endless waves with escalating difficulties.
-- **On-chain Integration**:
-  - ERC-8021 Transaction Attribution
-  - ERC-8004 Trustless Agents support
-  - "Say GM" via Base Network
-- **Mobile First**: Fully responsive and optimized for portrait mode gameplay.
+## Features & Capabilities
+
+- **Active Model Context Protocol (MCP)**: Full support for remote tool and AI agent command execution.
+- **Agent-to-Agent (A2A)**: Communication-ready interface.
+- **Strategic Tower Defense**: Classic TD mechanics scaled entirely on high-performance Canvas.
+- **Agent Capabilities**: 
+  - `portal-management`
+  - `warden-operations`
+  - `security-mechanics`
+  - `multi-task-automation`
+  - `access-control`
+  - `mcp-command-execution`
 
 ## Technology Stack
 
-- React 19 + TypeScript
-- Base Mainnet (Viem + Wagmi)
-- Zustand (State Management)
-- Tailwind CSS
-- Express.js + Vite (Full-stack architecture)
+- **Frontend Framework**: Next.js 14 App Router, React 19, TypeScript
+- **Styling & Animation**: Tailwind CSS, Framer Motion
+- **Web3 Ecosystem**: Base Network, Viem, Wagmi
+- **State Management**: Zustand
+- **Graphics**: HTML5 Canvas Rendering
 
-## AI Agents & orchestration
+## Agent Registration & Services
 
-This platform is integrated with the **Warden Portal Orchestrator** - an ERC-8004 compliant AI agent capable of portal management, operations, and multi-task automation.
+This decentralized trustless AI agent is formally registered adhering to EIP-8004 format:
 
-### Architecture
+- **Agent Registration Profile**: `/.well-known/agent-card.json`
+- **MCP Server Endpoint**: `/api/mcp`
+- **Agent Identity Endpoint**: `/api/agent`
 
-The Agent Card definition is available at:
-`/.well-known/agent-card.json`
+## MCP (Model Context Protocol) Connection Guide
 
-The following Agent endpoints are exposed:
-- `GET /api/agent` - Main agent control API
-- `GET /api/mcp` - Model Context Protocol availability
-- `POST /api/mcp` - Active command execution
+The Warden Portal orchestrator acts as a remote MCP server capable of acting upon standard AI commands. It is configured to run serverlessly through the Next.js App Router format, supporting CORS.
 
----
+1. Issue a `POST` request directly to `https://warden-portal.vercel.app/api/mcp`.
+2. Include the corresponding initialization method and payloads (e.g. `{"method": "tools/list"}`).
+3. Currently Available Demo MCP Tools:
+   - `get_race_status`
+   - `start_race`
+   - `get_leaderboard`
+   - `optimize_speed`
+   - `get_track_info`
 
-*Defend Reality on Base. The dimensional invaders are coming.*
+## How to Run Locally
+
+1. Clone this repository to your local environment.
+2. Install the necessary dependencies:
+   ```bash
+   npm install
+   ```
+3. Boot the local development server:
+   ```bash
+   npm run dev
+   ```
+4. Access the game and AI Agent endpoints via your local host port interface.

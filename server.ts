@@ -8,6 +8,18 @@ async function startServer() {
 
   app.use(express.json());
 
+  // Global CORS Middleware (Especially for MCP Endpoint preflight OPTIONS)
+  app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    if (req.method === "OPTIONS") {
+      res.sendStatus(204);
+      return;
+    }
+    next();
+  });
+
   // API Routes
   app.get("/api/mcp", (req, res) => {
     res.json({
@@ -16,14 +28,69 @@ async function startServer() {
       name: "Warden Portal MCP Endpoint",
       status: "active",
       description: "Active MCP server for Warden Portal Orchestrator Agent",
-      capabilities: ["portal-management", "warden-operations", "security-mechanics"],
+      capabilities: ["portal-management", "warden-operations", "security-mechanics", "multi-task-automation", "access-control", "mcp-command-execution"],
       timestamp: new Date().toISOString()
     });
   });
 
+  const TOOLS = [
+    {
+      name: "get_race_status",
+      description: "Get the current status of a race.",
+      inputSchema: { type: "object", properties: { raceId: { type: "string" } }, required: ["raceId"] }
+    },
+    {
+      name: "start_race",
+      description: "Start a new race.",
+      inputSchema: { type: "object", properties: { trackId: { type: "string" } }, required: ["trackId"] }
+    },
+    {
+      name: "get_leaderboard",
+      description: "Get the current leaderboard.",
+      inputSchema: { type: "object", properties: { limit: { type: "number" } } }
+    },
+    {
+      name: "optimize_speed",
+      description: "Optimize speed for current conditions.",
+      inputSchema: { type: "object", properties: { strategy: { type: "string" } } }
+    },
+    {
+      name: "get_track_info",
+      description: "Get information about the current track.",
+      inputSchema: { type: "object", properties: { trackId: { type: "string" } }, required: ["trackId"] }
+    }
+  ];
+
   app.post("/api/mcp", (req, res) => {
     try {
       const body = req.body;
+
+      if (body.method === 'tools/list') {
+        res.json({ tools: TOOLS });
+        return;
+      }
+
+      if (body.method === 'tools/call') {
+        const toolName = body.params?.name;
+        const args = body.params?.arguments || {};
+        res.json({
+          status: "success",
+          result: `Executed ${toolName} successfully`,
+          args
+        });
+        return;
+      }
+
+      if (body.method === 'prompts/list') {
+        res.json({ prompts: [] });
+        return;
+      }
+
+      if (body.method === 'resources/list') {
+        res.json({ resources: [] });
+        return;
+      }
+
       res.json({
         status: "success",
         message: "MCP command received",
