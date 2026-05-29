@@ -105,22 +105,36 @@ export async function POST(req: Request) {
       }, { headers: corsHeaders });
     }
 
-    // Default existing logic fallback (initialize, etc)
+    if (body.method === 'initialize') {
+      return NextResponse.json({
+        jsonrpc: "2.0",
+        id,
+        result: {
+          protocolVersion: "2024-11-05",
+          capabilities: {
+            tools: {},
+            prompts: {},
+            resources: {}
+          },
+          serverInfo: {
+            name: "Warden Portal Orchestrator",
+            version: "1.0.0"
+          }
+        }
+      }, { headers: corsHeaders });
+    }
+
+    if (body.method === 'notifications/initialized') {
+      return NextResponse.json({
+        jsonrpc: "2.0"
+      }, { headers: corsHeaders });
+    }
+
+    // Default existing logic fallback
     return NextResponse.json({
       jsonrpc: "2.0",
       id,
-      result: {
-        protocolVersion: "2024-11-05",
-        capabilities: {
-          tools: { listChanged: false },
-          prompts: { listChanged: false },
-          resources: { listChanged: false }
-        },
-        serverInfo: {
-          name: "Warden Portal Orchestrator",
-          version: "1.0.0"
-        }
-      }
+      error: { code: -32601, message: "Method not found" }
     }, { headers: corsHeaders });
 
   } catch (error) {

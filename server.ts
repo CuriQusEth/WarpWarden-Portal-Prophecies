@@ -111,21 +111,37 @@ async function startServer() {
         return;
       }
 
+      if (body.method === 'initialize') {
+        res.json({
+          jsonrpc: "2.0",
+          id: body.id,
+          result: {
+            protocolVersion: "2024-11-05",
+            capabilities: {
+              tools: {},
+              prompts: {},
+              resources: {}
+            },
+            serverInfo: {
+              name: "Warden Portal Orchestrator",
+              version: "1.0.0"
+            }
+          }
+        });
+        return;
+      }
+
+      if (body.method === 'notifications/initialized') {
+        res.json({
+          jsonrpc: "2.0"
+        });
+        return;
+      }
+
       res.json({
         jsonrpc: "2.0",
         id: body.id,
-        result: {
-          protocolVersion: "2024-11-05",
-          capabilities: {
-            tools: { listChanged: false },
-            prompts: { listChanged: false },
-            resources: { listChanged: false }
-          },
-          serverInfo: {
-            name: "Warden Portal Orchestrator",
-            version: "1.0.0"
-          }
-        }
+        error: { code: -32601, message: "Method not found" }
       });
     } catch (error) {
       res.status(400).json({ error: "Invalid MCP request" });
