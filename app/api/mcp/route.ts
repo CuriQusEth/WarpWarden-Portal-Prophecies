@@ -51,6 +51,9 @@ export async function GET() {
       "access-control", 
       "mcp-command-execution"
     ],
+    tools: TOOLS,
+    prompts: [],
+    resources: [],
     timestamp: new Date().toISOString()
   }, { headers: corsHeaders });
 }
@@ -58,7 +61,7 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const id = body.id || null;
+    const id = body.id !== undefined ? body.id : null;
 
     // Standard MCP Tool Discovery & Execution Routing
     if (body.method === 'tools/list') {

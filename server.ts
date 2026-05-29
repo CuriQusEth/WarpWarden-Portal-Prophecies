@@ -29,6 +29,9 @@ async function startServer() {
       status: "active",
       description: "Active MCP server for Warden Portal Orchestrator Agent",
       capabilities: ["portal-management", "warden-operations", "security-mechanics", "multi-task-automation", "access-control", "mcp-command-execution"],
+      tools: TOOLS,
+      prompts: [],
+      resources: [],
       timestamp: new Date().toISOString()
     });
   });
@@ -64,11 +67,12 @@ async function startServer() {
   app.post("/api/mcp", (req, res) => {
     try {
       const body = req.body;
+      const id = body.id !== undefined ? body.id : null;
 
       if (body.method === 'tools/list') {
         res.json({
           jsonrpc: "2.0",
-          id: body.id,
+          id,
           result: { tools: TOOLS }
         });
         return;
@@ -79,7 +83,7 @@ async function startServer() {
         const args = body.params?.arguments || {};
         res.json({
           jsonrpc: "2.0",
-          id: body.id,
+          id,
           result: {
             content: [
               {
@@ -96,7 +100,7 @@ async function startServer() {
       if (body.method === 'prompts/list') {
         res.json({
           jsonrpc: "2.0",
-          id: body.id,
+          id,
           result: { prompts: [] }
         });
         return;
@@ -105,7 +109,7 @@ async function startServer() {
       if (body.method === 'resources/list') {
         res.json({
           jsonrpc: "2.0",
-          id: body.id,
+          id,
           result: { resources: [] }
         });
         return;
@@ -114,7 +118,7 @@ async function startServer() {
       if (body.method === 'initialize') {
         res.json({
           jsonrpc: "2.0",
-          id: body.id,
+          id,
           result: {
             protocolVersion: "2024-11-05",
             capabilities: {
@@ -140,7 +144,7 @@ async function startServer() {
 
       res.json({
         jsonrpc: "2.0",
-        id: body.id,
+        id,
         error: { code: -32601, message: "Method not found" }
       });
     } catch (error) {
