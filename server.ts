@@ -66,7 +66,11 @@ async function startServer() {
       const body = req.body;
 
       if (body.method === 'tools/list') {
-        res.json({ tools: TOOLS });
+        res.json({
+          jsonrpc: "2.0",
+          id: body.id,
+          result: { tools: TOOLS }
+        });
         return;
       }
 
@@ -74,29 +78,54 @@ async function startServer() {
         const toolName = body.params?.name;
         const args = body.params?.arguments || {};
         res.json({
-          status: "success",
-          result: `Executed ${toolName} successfully`,
-          args
+          jsonrpc: "2.0",
+          id: body.id,
+          result: {
+            content: [
+              {
+                type: "text",
+                text: `Executed ${toolName} successfully with args: ${JSON.stringify(args)}`
+              }
+            ],
+            isError: false
+          }
         });
         return;
       }
 
       if (body.method === 'prompts/list') {
-        res.json({ prompts: [] });
+        res.json({
+          jsonrpc: "2.0",
+          id: body.id,
+          result: { prompts: [] }
+        });
         return;
       }
 
       if (body.method === 'resources/list') {
-        res.json({ resources: [] });
+        res.json({
+          jsonrpc: "2.0",
+          id: body.id,
+          result: { resources: [] }
+        });
         return;
       }
 
       res.json({
-        status: "success",
-        message: "MCP command received",
-        agent: "Warden Portal Orchestrator",
-        receivedAt: new Date().toISOString(),
-        payload: body
+        jsonrpc: "2.0",
+        id: body.id,
+        result: {
+          protocolVersion: "2024-11-05",
+          capabilities: {
+            tools: { listChanged: false },
+            prompts: { listChanged: false },
+            resources: { listChanged: false }
+          },
+          serverInfo: {
+            name: "Warden Portal Orchestrator",
+            version: "1.0.0"
+          }
+        }
       });
     } catch (error) {
       res.status(400).json({ error: "Invalid MCP request" });

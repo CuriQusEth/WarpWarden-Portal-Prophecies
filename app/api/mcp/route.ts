@@ -58,10 +58,15 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
+    const id = body.id || null;
 
     // Standard MCP Tool Discovery & Execution Routing
     if (body.method === 'tools/list') {
-      return NextResponse.json({ tools: TOOLS }, { headers: corsHeaders });
+      return NextResponse.json({
+        jsonrpc: "2.0",
+        id,
+        result: { tools: TOOLS }
+      }, { headers: corsHeaders });
     }
 
     if (body.method === 'tools/call') {
@@ -70,31 +75,60 @@ export async function POST(req: Request) {
       
       // Standard MCP execution success response
       return NextResponse.json({
-        status: "success",
-        result: `Executed ${toolName} successfully`,
-        args
+        jsonrpc: "2.0",
+        id,
+        result: {
+          content: [
+            {
+              type: "text",
+              text: `Executed ${toolName} successfully with args: ${JSON.stringify(args)}`
+            }
+          ],
+          isError: false
+        }
       }, { headers: corsHeaders });
     }
 
     if (body.method === 'prompts/list') {
-      return NextResponse.json({ prompts: [] }, { headers: corsHeaders });
+      return NextResponse.json({
+        jsonrpc: "2.0",
+        id,
+        result: { prompts: [] }
+      }, { headers: corsHeaders });
     }
 
     if (body.method === 'resources/list') {
-      return NextResponse.json({ resources: [] }, { headers: corsHeaders });
+      return NextResponse.json({
+        jsonrpc: "2.0",
+        id,
+        result: { resources: [] }
+      }, { headers: corsHeaders });
     }
 
-    // Default existing logic fallback
+    // Default existing logic fallback (initialize, etc)
     return NextResponse.json({
-      status: "success",
-      message: "MCP command received",
-      agent: "Warden Portal Orchestrator",
-      receivedAt: new Date().toISOString(),
-      payload: body
+      jsonrpc: "2.0",
+      id,
+      result: {
+        protocolVersion: "2024-11-05",
+        capabilities: {
+          tools: { listChanged: false },
+          prompts: { listChanged: false },
+          resources: { listChanged: false }
+        },
+        serverInfo: {
+          name: "Warden Portal Orchestrator",
+          version: "1.0.0"
+        }
+      }
     }, { headers: corsHeaders });
 
   } catch (error) {
-    return NextResponse.json({ error: "Invalid MCP request" }, { status: 400, headers: corsHeaders });
+    return NextResponse.json({
+      jsonrpc: "2.0",
+      id: null,
+      error: { code: -32700, message: "Parse error" }
+    }, { status: 400, headers: corsHeaders });
   }
 }
 
