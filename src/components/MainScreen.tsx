@@ -49,9 +49,13 @@ export default function MainScreen() {
           WARPWARDEN
         </motion.h1>
         
-        <div className="flex gap-4 mt-2 mb-12">
+        <div className="flex flex-wrap justify-center gap-2 mt-2 mb-10">
           <span className="text-[10px] uppercase tracking-[0.2em] text-cyan-400 font-bold px-2 py-0.5 border border-cyan-400/30 bg-cyan-400/10">System Stable</span>
           <span className="text-[10px] uppercase tracking-[0.2em] text-purple-400 font-bold px-2 py-0.5 border border-purple-400/30 bg-purple-400/10">Rift Ready</span>
+          <span className="text-[10px] uppercase tracking-[0.2em] text-emerald-400 font-bold px-2 py-0.5 border border-emerald-400/30 bg-emerald-400/10 flex items-center gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            Base Denim (200ms)
+          </span>
         </div>
 
         <motion.div 

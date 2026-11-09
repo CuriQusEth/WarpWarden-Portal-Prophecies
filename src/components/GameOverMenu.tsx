@@ -93,7 +93,7 @@ export default function GameOverMenu() {
             className="group p-4 bg-purple-600 hover:bg-purple-500 transition-all text-white flex flex-col items-center justify-center border-b-4 border-purple-800 disabled:opacity-50"
           >
             <span className="text-sm font-black uppercase tracking-widest">{isTxPending ? 'RECORDING...' : 'RECORD DEFENSE'}</span>
-            <span className="text-[8px] uppercase tracking-[0.2em] opacity-70 mt-1">Base Mainnet Transaction</span>
+            <span className="text-[8px] uppercase tracking-[0.2em] opacity-70 mt-1">Base Mainnet (Denim 200ms)</span>
           </button>
           
           <button 
